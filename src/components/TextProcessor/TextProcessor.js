@@ -3,8 +3,8 @@ import './TextProcessor.css';
 
 const TextProcessor = () => {
   const [content, setContent] = useState('');
-  const [prefix, setPrefix] = useState('');
-  const [suffix, setSuffix] = useState('');
+  const [affixText, setAffixText] = useState('');
+  const [affixType, setAffixType] = useState('prefix');
   const [error, setError] = useState('');
   const [copyStatus, setCopyStatus] = useState({ success: false, message: '' });
 
@@ -42,8 +42,38 @@ const TextProcessor = () => {
     }
 
     const lines = content.split('\n').filter(line => line.trim());
-    const processedLines = lines.map(line => `${prefix}${line}${suffix}`);
+    const processedLines = lines.map(line => {
+      switch (affixType) {
+        case 'prefix':
+          return `${affixText}${line}`;
+        case 'suffix':
+          return `${line}${affixText}`;
+        case 'separator':
+          return line.split(' ').filter(word => word.trim()).join(affixText);
+        default:
+          return line;
+      }
+    });
     setContent(processedLines.join('\n'));
+    setError('');
+  };
+
+  const lineBreak = () => {
+    if (!content.trim()) {
+      setError('请输入文本内容');
+      return;
+    }
+
+    if (affixType !== 'separator' || !affixText) {
+      setError('请选择分隔符模式并输入分隔符');
+      return;
+    }
+
+    const parts = content.split(affixText);
+    const processedContent = parts
+      .map((part, index) => index < parts.length - 1 ? part + affixText : part)
+      .join('\n');
+    setContent(processedContent);
     setError('');
   };
 
@@ -56,11 +86,20 @@ const TextProcessor = () => {
     const lines = content.split('\n').filter(line => line.trim());
     const processedLines = lines.map(line => {
       let result = line;
-      if (prefix && result.startsWith(prefix)) {
-        result = result.slice(prefix.length);
-      }
-      if (suffix && result.endsWith(suffix)) {
-        result = result.slice(0, -suffix.length);
+      switch (affixType) {
+        case 'prefix':
+          if (affixText && result.startsWith(affixText)) {
+            result = result.slice(affixText.length);
+          }
+          break;
+        case 'suffix':
+          if (affixText && result.endsWith(affixText)) {
+            result = result.slice(0, -affixText.length);
+          }
+          break;
+        case 'separator':
+          result = result.split(affixText).join('');
+          break;
       }
       return result;
     });
@@ -70,10 +109,19 @@ const TextProcessor = () => {
 
   const clearAll = () => {
     setContent('');
-    setPrefix('');
-    setSuffix('');
+    setAffixText('');
     setError('');
     setCopyStatus({ success: false, message: '' });
+  };
+
+  const compressLines = () => {
+    if (!content.trim()) {
+      setError('请输入文本内容');
+      return;
+    }
+    const lines = content.split('\n').filter(line => line.trim());
+    setContent(lines.join(''));
+    setError('');
   };
 
   const copyToClipboard = async () => {
@@ -102,20 +150,22 @@ const TextProcessor = () => {
             <div className="input-wrapper">
               <input
                 type="text"
-                value={prefix}
-                onChange={(e) => setPrefix(e.target.value)}
-                placeholder="输入行首添加的字符"
+                value={affixText}
+                onChange={(e) => setAffixText(e.target.value)}
+                placeholder="输入要添加的字符"
                 className="affix-input"
               />
             </div>
             <div className="input-wrapper">
-              <input
-                type="text"
-                value={suffix}
-                onChange={(e) => setSuffix(e.target.value)}
-                placeholder="输入行尾添加的字符"
-                className="affix-input"
-              />
+              <select
+                value={affixType}
+                onChange={(e) => setAffixType(e.target.value)}
+                className="affix-select"
+              >
+                <option value="prefix">行首</option>
+                <option value="suffix">行尾</option>
+                <option value="separator">分隔符</option>
+              </select>
             </div>
           </div>
           <textarea
@@ -128,6 +178,8 @@ const TextProcessor = () => {
             <button onClick={() => sortLines(false)}>降序</button>
             <button onClick={processLines}>添加</button>
             <button onClick={removeLines}>去除</button>
+            <button onClick={lineBreak}>换行</button>
+            <button onClick={compressLines}>压缩</button>
             {content && (
               <>
                 <button 
