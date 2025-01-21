@@ -47,6 +47,27 @@ const TextProcessor = () => {
     setError('');
   };
 
+  const removeLines = () => {
+    if (!content.trim()) {
+      setError('请输入文本内容');
+      return;
+    }
+
+    const lines = content.split('\n').filter(line => line.trim());
+    const processedLines = lines.map(line => {
+      let result = line;
+      if (prefix && result.startsWith(prefix)) {
+        result = result.slice(prefix.length);
+      }
+      if (suffix && result.endsWith(suffix)) {
+        result = result.slice(0, -suffix.length);
+      }
+      return result;
+    });
+    setContent(processedLines.join('\n'));
+    setError('');
+  };
+
   const clearAll = () => {
     setContent('');
     setPrefix('');
@@ -106,6 +127,7 @@ const TextProcessor = () => {
             <button onClick={() => sortLines(true)}>升序</button>
             <button onClick={() => sortLines(false)}>降序</button>
             <button onClick={processLines}>添加</button>
+            <button onClick={removeLines}>去除</button>
             {content && (
               <>
                 <button 

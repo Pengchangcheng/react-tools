@@ -4,7 +4,7 @@ import JsonFormatter from '../JsonFormatter/JsonFormatter';
 import TextProcessor from '../TextProcessor/TextProcessor';
 
 const Layout = () => {
-  const [selectedMenu, setSelectedMenu] = useState('');
+  const [selectedMenu, setSelectedMenu] = useState('json-formatter');
   return (
     <div className="layout-container">
       <div className="layout-left">
