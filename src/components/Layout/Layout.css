@@ -1,0 +1,39 @@
+.layout-container {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.layout-left {
+  width: 20%;
+  background-color: #f5f5f5;
+  border-right: 1px solid #e0e0e0;
+  padding: 20px;
+}
+
+.layout-right {
+  width: 80%;
+  padding: 20px;
+}
+
+.menu-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu-list li {
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.menu-list li:hover {
+  background-color: #e0e0e0;
+}
+
+.content-area {
+  height: 100%;
+}
