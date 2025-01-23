@@ -1,0 +1,112 @@
+.sql-formatter {
+  padding: 20px;
+  height: 100%;
+}
+
+.sql-container {
+  height: 100%;
+}
+
+.editor-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.editor-content {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-family: monospace;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  background-color: transparent;
+  position: relative;
+  z-index: 2;
+}
+
+.editor-content:focus {
+  outline: none;
+  border-color: #2196F3;
+  box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.1);
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.button-group button {
+  padding: 10px 20px;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: opacity 0.3s ease;
+}
+
+/* Format/Compress buttons - Dark Green */
+.sql-formatter .button-group button:nth-child(1),
+.sql-formatter .button-group button:nth-child(2) {
+  background-color: #157c1a !important;
+}
+
+/* Copy button - Blue */
+.sql-formatter .button-group .copy-button {
+  background-color: #2196F3 !important;
+}
+
+.sql-formatter .button-group .copy-button.success {
+  background-color: #4CAF50 !important;
+}
+
+/* Clear button - Yellow */
+.sql-formatter .button-group .clear-button {
+  background-color: #ffc107 !important;
+}
+
+.button-group button:hover {
+  opacity: 0.9;
+}
+
+.error-message {
+  color: #ff0000;
+  margin: 10px 0;
+  padding: 10px;
+  background-color: #ffe6e6;
+  border-radius: 4px;
+}
+
+/* 高亮样式 */
+.highlight {
+  background-color: rgba(255, 255, 0, 0.2);
+  padding: 2px;
+  border-radius: 2px;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .sql-formatter {
+    margin: 10px;
+    padding: 15px;
+  }
+  
+  .editor-content {
+    min-height: 200px;
+  }
+  
+  .button-group {
+    flex-direction: column;
+  }
+  
+  .button-group button {
+    width: 100%;
+  }
+}
