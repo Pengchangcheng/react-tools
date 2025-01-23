@@ -3,24 +3,31 @@
   height: 100%;
 }
 
-.search-input {
-  width: 100%;
-  padding: 10px;
+.search-container {
+  display: flex;
+  align-items: center;
+  gap: 20px;
   margin-bottom: 10px;
+}
+
+.search-input {
+  width: 300px;
+  padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 14px;
+}
+
+.match-count {
+  color: #666;
+  font-size: 14px;
+  white-space: nowrap;
 }
 
 .search-input:focus {
   outline: none;
   border-color: #2196F3;
   box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.1);
-}
-
-.highlight {
-  background-color: #90EE90;
-  padding: 2px 0;
 }
 
 .json-container {
@@ -35,7 +42,7 @@
 .editor-content {
   display: block;
   width: 100%;
-  height: 400px;
+  height: 100%;
   padding: 10px;
   margin: 10px 0;
   border: 1px solid #ccc;
@@ -44,6 +51,27 @@
   overflow-y: auto;
   white-space: pre-wrap;
   word-wrap: break-word;
+  background-color: transparent;
+  position: relative;
+  z-index: 2;
+}
+
+.highlight-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 4px;
+  font-family: monospace;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  pointer-events: none;
+  z-index: 1;
+  color: transparent;
 }
 
 .editor-content:focus {
@@ -52,53 +80,41 @@
   box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.1);
 }
 
-.editor-content .placeholder {
-  color: #999;
-}
-
-.editor-section .editor-content {
-  width: 100%;
-  height: 400px;
-  padding: 10px;
-  margin: 10px 0;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-family: monospace;
-  resize: vertical;
-}
-
 .button-group {
   display: flex;
   gap: 10px;
+  margin-top: 20px;
   margin-bottom: 10px;
 }
 
 .button-group button {
   padding: 10px 20px;
-  background-color: #4CAF50;
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   font-size: 16px;
+  transition: opacity 0.3s ease;
 }
 
-.button-group .copy-button {
-  background-color: #2196F3;
-  transition: background-color 0.3s ease;
+/* Format/Compress buttons - Dark Green */
+.json-formatter .button-group button:nth-child(1),
+.json-formatter .button-group button:nth-child(2) {
+  background-color: #157c1a !important;
 }
 
-.button-group .copy-button.success {
-  background-color: #4CAF50;
+/* Copy button - Blue */
+.json-formatter .button-group .copy-button {
+  background-color: #2196F3 !important;
 }
 
-.button-group .clear-button {
-  background-color: #ffc107;
-  transition: background-color 0.3s ease;
+.json-formatter .button-group .copy-button.success {
+  background-color: #4CAF50 !important;
 }
 
-.button-group .clear-button:hover {
-  background-color: #e0a800;
+/* Clear button - Yellow */
+.json-formatter .button-group .clear-button {
+  background-color: #ffc107 !important;
 }
 
 .button-group button:hover {
@@ -111,30 +127,4 @@
   padding: 10px;
   background-color: #ffe6e6;
   border-radius: 4px;
-}
-
-.preview-section pre {
-  flex: 1;
-  background-color: #f8f8f8;
-  padding: 15px;
-  margin: 10px 0;
-  border-radius: 4px;
-  overflow-x: auto;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  font-family: monospace;
-  border: 1px solid #ddd;
-}
-
-.preview-section pre {
-  flex: 1;
-  background-color: #f8f8f8;
-  padding: 15px;
-  margin: 10px 0;
-  border-radius: 4px;
-  overflow-x: auto;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  font-family: monospace;
-  border: 1px solid #ddd;
 }

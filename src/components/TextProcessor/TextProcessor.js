@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './TextProcessor.css';
+import { ClipboardUtils } from '../../utils/clipboard';
 
 const TextProcessor = () => {
   const [content, setContent] = useState('');
@@ -125,21 +126,15 @@ const TextProcessor = () => {
   };
 
   const copyToClipboard = async () => {
-    try {
-      const textArea = document.createElement('textarea');
-      textArea.value = content;
-      document.body.appendChild(textArea);
-      textArea.select();
-      document.execCommand('copy');
-      document.body.removeChild(textArea);
-      setCopyStatus({ success: true, message: '已复制！' });
-      setTimeout(() => setCopyStatus({ success: false, message: '' }), 2000);
-    } catch (err) {
-      console.error('复制失败:', err);
-      setCopyStatus({ success: false, message: '复制失败' });
-      setTimeout(() => setCopyStatus({ success: false, message: '' }), 2000);
-    }
-  };
+      const success = await ClipboardUtils.copyText(content);
+      if (success) {
+        setCopyStatus({ success: true, message: '已复制！' });
+        setTimeout(() => setCopyStatus({ success: false, message: '' }), 2000);
+      } else {
+        setCopyStatus({ success: false, message: '复制失败' });
+        setTimeout(() => setCopyStatus({ success: false, message: '' }), 2000);
+      }
+    };
 
   return (
     <div className="text-processor">
