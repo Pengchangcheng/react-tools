@@ -54,9 +54,6 @@ const Layout = () => {
   const menuItems = useMemo(() => getMenuConfig(t), [t]);
   const [selectedMenu, setSelectedMenu] = useState(menuItems[0].id);
 
-  // 获取当前选中的组件
-  const currentComponent = menuItems.find(item => item.id === selectedMenu)?.component;
-
    // 获取当前选中的组件
    const CurrentComponent = menuItems.find(item => item.id === selectedMenu)?.component || null;
 
