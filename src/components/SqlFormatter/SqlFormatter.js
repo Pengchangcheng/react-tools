@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import './SqlFormatter.css';
 
 const SqlFormatter = () => {
+  const { t } = useTranslation();
   const [sql, setSql] = useState('');
   const [error, setError] = useState('');
   const [copyStatus, setCopyStatus] = useState({ success: false, message: '' });
@@ -10,14 +12,14 @@ const SqlFormatter = () => {
   const validateSql = () => {
     try {
       if (!sql.trim()) {
-        setError('请输入SQL语句');
+        setError(t('pleaseEnterSQL'));
         return false;
       }
       // TODO: 添加更复杂的SQL语法校验
       setError('');
       return true;
     } catch (err) {
-      setError('SQL语法错误');
+      setError(t('invalidSQL'));
       return false;
     }
   };
@@ -39,7 +41,7 @@ const SqlFormatter = () => {
       setSql(formattedSql.trim());
       setError('');
     } catch (err) {
-      setError('格式化失败');
+      setError(t('formatFailed'));
     }
   };
 
@@ -57,7 +59,7 @@ const SqlFormatter = () => {
       setSql(compressedSql);
       setError('');
     } catch (err) {
-      setError('压缩失败');
+      setError(t('compressFailed'));
     }
   };
 
@@ -65,11 +67,11 @@ const SqlFormatter = () => {
   const copyToClipboard = async () => {
     try {
       await navigator.clipboard.writeText(sql);
-      setCopyStatus({ success: true, message: '已复制！' });
+      setCopyStatus({ success: true, message: t('copied') });
       setTimeout(() => setCopyStatus({ success: false, message: '' }), 2000);
     } catch (err) {
       console.error('复制失败:', err);
-      setCopyStatus({ success: false, message: '复制失败' });
+      setCopyStatus({ success: false, message: t('copyFailed') });
       setTimeout(() => setCopyStatus({ success: false, message: '' }), 2000);
     }
   };
@@ -85,25 +87,25 @@ const SqlFormatter = () => {
     <div className="sql-formatter">
       <div className="sql-container">
         <div className="editor-section">
-          <h2>SQL 格式化工具</h2>
+          <h2>{t('sqlFormatter')}</h2>
           <textarea
             className="editor-content"
             value={sql}
             onChange={(e) => setSql(e.target.value)}
-            placeholder="在此输入 SQL..."
+            placeholder={t('enterSQLHere')}
           />
           <div className="button-group">
-            <button onClick={formatSql}>格式化</button>
-            <button onClick={compressSql}>压缩</button>
+            <button onClick={formatSql}>{t('format')}</button>
+            <button onClick={compressSql}>{t('compress')}</button>
             {sql && (
               <>
                 <button 
                   onClick={copyToClipboard} 
                   className={`copy-button ${copyStatus.success ? 'success' : ''}`}
                 >
-                  {copyStatus.message || '复制'}
+                  {copyStatus.message || t('copy')}
                 </button>
-                <button onClick={clearContent} className="clear-button">清除</button>
+                <button onClick={clearContent} className="clear-button">{t('clear')}</button>
               </>
             )}
           </div>

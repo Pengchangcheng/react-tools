@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import './JsonFormatter.css';
 import { ClipboardUtils } from '../../utils/clipboard';
 
 const JsonFormatter = () => {
+  const { t } = useTranslation();
   const [content, setContent] = useState('');
   const [error, setError] = useState('');
   const [copyStatus, setCopyStatus] = useState({ success: false, message: '' });
@@ -10,7 +12,7 @@ const JsonFormatter = () => {
   const formatJson = () => {
     try {
       if (!content.trim()) {
-        setError('请输入 JSON 内容');
+        setError(t('pleaseEnterJson'));
         return;
       }
       const parsedJson = JSON.parse(content);
@@ -18,14 +20,14 @@ const JsonFormatter = () => {
       setContent(formattedJson);
       setError('');
     } catch (err) {
-      setError('无效的 JSON 格式');
+      setError(t('invalidJson'));
     }
   };
 
   const compressJson = () => {
     try {
       if (!content.trim()) {
-        setError('请输入 JSON 内容');
+        setError(t('pleaseEnterJson'));
         return;
       }
       const parsedJson = JSON.parse(content);
@@ -33,17 +35,17 @@ const JsonFormatter = () => {
       setContent(compressedJson);
       setError('');
     } catch (err) {
-      setError('无效的 JSON 格式');
+      setError(t('invalidJson'));
     }
   };
 
   const copyToClipboard = async () => {
     const success = await ClipboardUtils.copyText(content);
     if (success) {
-      setCopyStatus({ success: true, message: '已复制！' });
+      setCopyStatus({ success: true, message: t('copied')});
       setTimeout(() => setCopyStatus({ success: false, message: '' }), 2000);
     } else {
-      setCopyStatus({ success: false, message: '复制失败' });
+      setCopyStatus({ success: false, message: t('copyFailed') });
       setTimeout(() => setCopyStatus({ success: false, message: '' }), 2000);
     }
   };
@@ -52,28 +54,28 @@ const JsonFormatter = () => {
     <div className="json-formatter">
       <div className="json-container">
         <div className="editor-section">
-          <h2>JSON 编辑器</h2>
+          <h2>{t('jsonEditor')}</h2>
           <textarea
             className="editor-content"
             value={content}
             onChange={(e) => setContent(e.target.value)}
-            placeholder="在此输入 JSON..."
+            placeholder={t('enterJson')}
           />
           <div className="button-group">
-            <button onClick={formatJson}>格式化</button>
-            <button onClick={compressJson}>压缩</button>
+            <button onClick={formatJson}>{t('format')}</button>
+            <button onClick={compressJson}>{t('compress')}</button>
             {content && (
               <>
                 <button 
                   onClick={copyToClipboard} 
                   className={`copy-button ${copyStatus.success ? 'success' : ''}`}
                 >
-                  {copyStatus.message || '复制'}
+                  {copyStatus.message || t('copy')}
                 </button>
                 <button onClick={() => {
                   setContent('');
                   setError('');
-                }} className="clear-button">清除</button>
+                }} className="clear-button">{t('clear')}</button>
               </>
             )}
           </div>

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import './TextProcessor.css';
 import { ClipboardUtils } from '../../utils/clipboard';
 
 const TextProcessor = () => {
+  const { t } = useTranslation();
   const [content, setContent] = useState('');
   const [affixText, setAffixText] = useState('');
   const [affixType, setAffixType] = useState('prefix');
@@ -11,7 +13,7 @@ const TextProcessor = () => {
 
   const sortLines = (ascending = true) => {
     if (!content.trim()) {
-      setError('请输入文本内容');
+      setError(t('pleaseEnterText'));
       return;
     }
 
@@ -38,7 +40,7 @@ const TextProcessor = () => {
 
   const processLines = () => {
     if (!content.trim()) {
-      setError('请输入文本内容');
+      setError(t('pleaseEnterText'));
       return;
     }
 
@@ -61,12 +63,12 @@ const TextProcessor = () => {
 
   const lineBreak = () => {
     if (!content.trim()) {
-      setError('请输入文本内容');
+      setError(t('pleaseEnterText'));
       return;
     }
 
     if (affixType !== 'separator' || !affixText) {
-      setError('请选择分隔符模式并输入分隔符');
+      setError(t('textSplit'));
       return;
     }
 
@@ -80,7 +82,7 @@ const TextProcessor = () => {
 
   const removeLines = () => {
     if (!content.trim()) {
-      setError('请输入文本内容');
+      setError(t('pleaseEnterText'));
       return;
     }
 
@@ -117,7 +119,7 @@ const TextProcessor = () => {
 
   const compressLines = () => {
     if (!content.trim()) {
-      setError('请输入文本内容');
+      setError(t('pleaseEnterText'));
       return;
     }
     const lines = content.split('\n').filter(line => line.trim());
@@ -128,10 +130,10 @@ const TextProcessor = () => {
   const copyToClipboard = async () => {
       const success = await ClipboardUtils.copyText(content);
       if (success) {
-        setCopyStatus({ success: true, message: '已复制！' });
+        setCopyStatus({ success: true, message: t('copied') });
         setTimeout(() => setCopyStatus({ success: false, message: '' }), 2000);
       } else {
-        setCopyStatus({ success: false, message: '复制失败' });
+        setCopyStatus({ success: false, message: t('copyFailed') });
         setTimeout(() => setCopyStatus({ success: false, message: '' }), 2000);
       }
     };
@@ -140,14 +142,14 @@ const TextProcessor = () => {
     <div className="text-processor">
       <div className="text-container">
         <div className="editor-section">
-          <h2>文本处理器</h2>
+          <h2>{t('textProcessor')}</h2>
           <div className="input-group">
             <div className="input-wrapper">
               <input
                 type="text"
                 value={affixText}
                 onChange={(e) => setAffixText(e.target.value)}
-                placeholder="输入要添加的字符"
+                placeholder={t('pleaseEnterAddChar')}
                 className="affix-input"
               />
             </div>
@@ -157,33 +159,33 @@ const TextProcessor = () => {
                 onChange={(e) => setAffixType(e.target.value)}
                 className="affix-select"
               >
-                <option value="prefix">行首</option>
-                <option value="suffix">行尾</option>
-                <option value="separator">分隔符</option>
+                <option value="prefix">{t('row_header')}</option>
+                <option value="suffix">{t('row_tail')}</option>
+                <option value="separator">{t('row_split')}</option>
               </select>
             </div>
           </div>
           <textarea
             value={content}
             onChange={(e) => setContent(e.target.value)}
-            placeholder="在此输入多行文本..."
+            placeholder={t('pleaseEnterMultiText')}
           />
           <div className="button-group">
-            <button onClick={() => sortLines(true)}>升序</button>
-            <button onClick={() => sortLines(false)}>降序</button>
-            <button onClick={processLines}>添加</button>
-            <button onClick={removeLines}>去除</button>
-            <button onClick={lineBreak}>换行</button>
-            <button onClick={compressLines}>压缩</button>
+            <button onClick={() => sortLines(true)}>{t('row_asc')}</button>
+            <button onClick={() => sortLines(false)}>{t('row_desc')}</button>
+            <button onClick={processLines}>{t('row_add')}</button>
+            <button onClick={removeLines}>{t('row_cut')}</button>
+            <button onClick={lineBreak}>{t('row_lineBreak')}</button>
+            <button onClick={compressLines}>{t('compress')}</button>
             {content && (
               <>
                 <button 
                   onClick={copyToClipboard} 
                   className={`copy-button ${copyStatus.success ? 'success' : ''}`}
                 >
-                  {copyStatus.message || '复制'}
+                  {copyStatus.message || t('copy')}
                 </button>
-                <button onClick={clearAll} className="clear-button">清除</button>
+                <button onClick={clearAll} className="clear-button">{t('clear')}</button>
               </>
             )}
           </div>
