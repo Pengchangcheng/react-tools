@@ -35,8 +35,20 @@ export default {
     row_add: 'Add',
     row_cut: 'Cut',
     row_lineBreak: 'LineBreak',
-    about: "About",
-    aboutDescription: "This is a React Tools application. Feel free to contact me if you have any questions.",
+    about: 'About',
+    aboutDescription: 'This is a React Tools application. Feel free to contact me if you have any questions.',
     myEmail: 'pengchangchengde@gmail.com',
+    qrCode: 'QR Code',
+    qrCodeGenerator: 'QR Code Generator',
+    enterQrContent: 'Enter content to generate QR code',
+    size: 'Size',
+    foregroundColor: 'Foreground Color',
+    backgroundColor: 'Background Color',
+    errorCorrectionLevel: 'Error Correction Level',
+    low: 'Low',
+    medium: 'Medium',
+    quartile: 'Quartile',
+    high: 'High',
+    downloadQrCode: 'Download QR Code'
   }
 };

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import ContentLayout from '../common/ContentLayout/ContentLayout';
 import './SqlFormatter.css';
 
 const SqlFormatter = () => {
@@ -84,35 +85,32 @@ const SqlFormatter = () => {
   };
 
   return (
-    <div className="sql-formatter">
-      <div className="sql-container">
-        <div className="editor-section">
-          <h2>{t('sqlFormatter')}</h2>
-          <textarea
-            className="editor-content"
-            value={sql}
-            onChange={(e) => setSql(e.target.value)}
-            placeholder={t('enterSQLHere')}
-          />
-          <div className="button-group">
-            <button onClick={formatSql}>{t('format')}</button>
-            <button onClick={compressSql}>{t('compress')}</button>
-            {sql && (
-              <>
-                <button 
-                  onClick={copyToClipboard} 
-                  className={`copy-button ${copyStatus.success ? 'success' : ''}`}
-                >
-                  {copyStatus.message || t('copy')}
-                </button>
-                <button onClick={clearContent} className="clear-button">{t('clear')}</button>
-              </>
-            )}
-          </div>
-          {error && <div className="error-message">{error}</div>}
+    <ContentLayout title={t('sqlFormatter')}>
+      <div className="input-section">
+        <textarea
+          className="editor-content"
+          value={sql}
+          onChange={(e) => setSql(e.target.value)}
+          placeholder={t('enterSQLHere')}
+        />
+        <div className="button-group">
+          <button onClick={formatSql}>{t('format')}</button>
+          <button onClick={compressSql}>{t('compress')}</button>
+          {sql && (
+            <>
+              <button 
+                onClick={copyToClipboard} 
+                className={`copy-button ${copyStatus.success ? 'success' : ''}`}
+              >
+                {copyStatus.message || t('copy')}
+              </button>
+              <button onClick={clearContent} className="clear-button">{t('clear')}</button>
+            </>
+          )}
         </div>
+        {error && <div className="error-message">{error}</div>}
       </div>
-    </div>
+    </ContentLayout>
   );
 };
 

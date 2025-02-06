@@ -23,3 +23,30 @@
   color: white;
   border-color: #1890ff;
 }
+
+.settings-content {
+  width: 100%;
+  padding: 1rem;
+}
+
+.settings-group {
+  margin-bottom: 1.5rem;
+}
+
+.settings-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0.5rem 0;
+}
+
+.settings-item label {
+  min-width: 120px;
+}
+
+.settings-item select,
+.settings-item input {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}

@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import ContentLayout from '../common/ContentLayout/ContentLayout';
 import './TextProcessor.css';
 import { ClipboardUtils } from '../../utils/clipboard';
+
 
 const TextProcessor = () => {
   const { t } = useTranslation();
@@ -139,10 +141,9 @@ const TextProcessor = () => {
     };
 
   return (
-    <div className="text-processor">
-      <div className="text-container">
+    <ContentLayout title={t('textProcessor')}>
+      <div className="input-section">
         <div className="editor-section">
-          <h2>{t('textProcessor')}</h2>
           <div className="input-group">
             <div className="input-wrapper">
               <input
@@ -192,7 +193,7 @@ const TextProcessor = () => {
           {error && <div className="error-message">{error}</div>}
         </div>
       </div>
-    </div>
+    </ContentLayout>
   );
 };
 

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import './JsonFormatter.css';
 import { ClipboardUtils } from '../../utils/clipboard';
+import ContentLayout from '../common/ContentLayout/ContentLayout';
 
 const JsonFormatter = () => {
   const { t } = useTranslation();
@@ -51,10 +52,9 @@ const JsonFormatter = () => {
   };
 
   return (
-    <div className="json-formatter">
-      <div className="json-container">
+    <ContentLayout title={t('jsonEditor')}>
+      <div className="input-section">
         <div className="editor-section">
-          <h2>{t('jsonEditor')}</h2>
           <textarea
             className="editor-content"
             value={content}
@@ -82,7 +82,7 @@ const JsonFormatter = () => {
           {error && <div className="error-message">{error}</div>}
         </div>
       </div>
-    </div>
+    </ContentLayout>
   );
 };
 

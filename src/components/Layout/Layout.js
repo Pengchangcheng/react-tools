@@ -1,34 +1,7 @@
 import React, { useState, useMemo} from 'react';
 import { useTranslation } from 'react-i18next';
 import './Layout.css';
-import JsonFormatter from '../JsonFormatter/JsonFormatter';
-import TextProcessor from '../TextProcessor/TextProcessor';
-import SqlFormatter from '../SqlFormatter/SqlFormatter';
-import Settings from '../Settings/Settings';
-
-// 菜单配置项
-const getMenuConfig = (t) => [
-  {
-    id: 'json-formatter',
-    label: t('jsonFormatter'),
-    component: JsonFormatter
-  },
-  {
-    id: 'text-processor',
-    label: t('textProcessor'),
-    component: TextProcessor
-  },
-  {
-    id: 'sql-formatter',
-    label: t('sqlFormatter'),
-    component: SqlFormatter
-  },
-  {
-    id: 'settings',
-    label: t('settings'),
-    component: Settings
-  }
-];
+import { getMenuConfig } from '../../config/menu';
 
 // 菜单列表组件
 const MenuList = ({ items, selectedId, onSelect }) => (
