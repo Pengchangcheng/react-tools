@@ -11,14 +11,14 @@ export const getMenuConfig = (t) => [
         component: QrCode
     },
     {
-        id: 'json-formatter',
-        label: t('jsonFormatter'),
-        component: JsonFormatter
-    },
-    {
         id: 'text-processor',
         label: t('textProcessor'),
         component: TextProcessor
+    },
+    {
+        id: 'json-formatter',
+        label: t('jsonFormatter'),
+        component: JsonFormatter
     },
     {
         id: 'sql-formatter',
